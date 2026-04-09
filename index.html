@@ -9,9 +9,9 @@
     <meta name="author" content="SWITS Institute">
     <meta name="robots" content="index, follow">
 
-    <link rel="icon" type="image/png" href="./favicon.png?v=2">
-    <link rel="apple-touch-icon" href="./favicon.png?v=2">
-    <link rel="shortcut icon" type="image/png" href="./favicon.png?v=2">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
     <meta property="og:image" content="https://zyllokit.pages.dev/favicon.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,77 +54,61 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- UI COMPONENTS ---
-
         const AdSlot = ({ type }) => {
-            const isAdActive = false; 
-            if (isAdActive) {
-                return (
-                    <div className="w-full flex justify-center py-4">
-                        <ins className="adsbygoogle" style={{display:'block'}} data-ad-client="ca-pub-xxx" data-ad-slot="xxx" data-ad-format="auto"></ins>
-                    </div>
-                );
-            }
             return (
                 <div className="w-full ad-placeholder border border-brand/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center group transition-all hover:border-brand/30">
                     {type === 'banner' ? (
                         <div className="flex flex-col md:flex-row items-center gap-4">
                             <div className="p-2 bg-brand/10 rounded-lg text-brand text-xs font-bold uppercase tracking-widest">Tip</div>
-                            <p className="text-sm text-gray-400 italic font-medium">"Efficiency is doing things right; effectiveness is doing the right things." — Lean Scale Logic.</p>
+                            <p className="text-sm text-gray-400 italic font-medium">"Efficiency is doing things right; effectiveness is doing the right things." — SWITS Strategy.</p>
                         </div>
                     ) : (
                         <div className="space-y-3">
                             <div className="h-12 w-12 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform text-brand">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                             </div>
-                            <h4 className="text-brand font-bold uppercase tracking-[4px] text-xs">Secure by Design</h4>
-                            <p className="text-gray-500 text-[10px] md:text-xs max-w-xs mx-auto">All data is processed locally in your browser. We never store your inputs on our servers.</p>
+                            <h4 className="text-brand font-bold uppercase tracking-[4px] text-xs">Secure Processing</h4>
+                            <p className="text-gray-500 text-[10px] md:text-xs max-w-xs mx-auto">100% Client-side. Your data never leaves this device.</p>
                         </div>
                     )}
                 </div>
             );
         };
 
-        // --- PAGE SECTIONS ---
-
         const AboutPage = () => (
             <div className="fade-in space-y-8 max-w-3xl mx-auto py-10 px-4">
                 <div className="text-center space-y-4">
-                    <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter">About <span className="text-brand">ZylloKit</span></h2>
-                    <p className="text-gray-400 font-medium">The Professional Developer's Swiss Army Knife.</p>
+                    <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-white">About <span className="text-brand">ZylloKit</span></h2>
+                    <p className="text-gray-400 font-medium">Professional Developer Swiss Army Knife.</p>
                 </div>
                 <div className="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 space-y-6 leading-relaxed text-gray-300">
-                    <p>ZylloKit is a premium suite of developer tools designed by <strong>SWITS Institute</strong>. We believe in high-performance, minimalist software that follows the <strong>Lean Scale Model™</strong>.</p>
+                    <p>ZylloKit is a premium suite of developer tools designed by <strong>SWITS Institute</strong>. We build high-performance, minimalist software for international standards.</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                         <div className="p-4 border border-white/5 rounded-2xl bg-white/5">
-                            <h4 className="text-brand font-bold mb-2">Private</h4>
-                            <p className="text-xs text-gray-500">Processing happens 100% on the client-side. No databases, no logs.</p>
+                            <h4 className="text-brand font-bold mb-2">Zero Logs</h4>
+                            <p className="text-xs text-gray-500">No backend storage. Privacy is integrated into the core architecture.</p>
                         </div>
                         <div className="p-4 border border-white/5 rounded-2xl bg-white/5">
-                            <h4 className="text-brand font-bold mb-2">Fast</h4>
-                            <p className="text-xs text-gray-500">Built with modern React and Tailwind CSS for instant feedback.</p>
+                            <h4 className="text-brand font-bold mb-2">Ultra Fast</h4>
+                            <p className="text-xs text-gray-500">Powered by React 18 for instantaneous processing and response.</p>
                         </div>
                     </div>
-                    <p className="pt-6 border-t border-white/5 text-sm italic">Developed under the mission of SWITS Institute to elevate technical education and digital standards globally.</p>
+                    <p className="pt-6 border-t border-white/5 text-sm italic">Mission: Elevating digital standards through clean code and lean operations.</p>
                 </div>
             </div>
         );
 
         const PrivacyPage = () => (
             <div className="fade-in space-y-8 max-w-3xl mx-auto py-10 px-4">
-                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-center italic">Privacy <span className="text-brand">Protocol</span></h2>
+                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-center italic text-white">Privacy <span className="text-brand">Protocol</span></h2>
                 <div className="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 space-y-8">
                     <section>
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-3">1. Data Sovereignty</h3>
-                        <p className="text-gray-400 text-sm">ZylloKit does not collect, store, or transmit your personal data. All tools, including the QR Generator and JSON Prettifier, work entirely within your browser's local memory.</p>
+                        <h3 className="text-lg md:text-xl font-bold text-white mb-3">1. Local Processing</h3>
+                        <p className="text-gray-400 text-sm">All tools work entirely within your browser memory. We do not transmit or store your technical inputs.</p>
                     </section>
                     <section>
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-3">2. Cookies & Analytics</h3>
-                        <p className="text-gray-400 text-sm">We may use standard cookies for site performance and Google Adsense to display advertisements. These third-party services may collect data to provide personalized experiences.</p>
-                    </section>
-                    <section>
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-3">3. Security</h3>
-                        <p className="text-gray-400 text-sm">Our platform uses SSL encryption to ensure your connection is secure. Since we do not have a backend for these tools, your input data never leaves your device.</p>
+                        <h3 className="text-lg md:text-xl font-bold text-white mb-3">2. Transparency</h3>
+                        <p className="text-gray-400 text-sm">We use standard Cloudflare analytics and Google AdSense. No hidden tracking or data mining is performed.</p>
                     </section>
                 </div>
             </div>
@@ -149,12 +133,12 @@
                         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                             <div className="space-y-6 order-2 md:order-1">
                                 <h3 className="text-2xl font-bold text-white tracking-tight">QR Engine</h3>
-                                <textarea value={qrText} onChange={(e) => setQrText(e.target.value)} className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-brand transition-all outline-none h-40 font-mono text-sm" placeholder="Enter link or text..." />
-                                <button onClick={downloadQR} className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white/10 transition active:scale-95">Export as PNG</button>
+                                <textarea value={qrText} onChange={(e) => setQrText(e.target.value)} className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-brand transition-all outline-none h-40 font-mono text-sm text-white" placeholder="Enter link or text..." />
+                                <button onClick={downloadQR} className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white/10 transition active:scale-95 text-white">Export as PNG</button>
                             </div>
                             <div className="flex flex-col items-center justify-center order-1 md:order-2">
                                 <div className="bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl border-[6px] md:border-[8px] border-brand/20" id="qrcode"></div>
-                                <p className="text-[10px] text-gray-500 mt-4 uppercase tracking-widest font-bold">Auto-updates on type</p>
+                                <p className="text-[10px] text-gray-500 mt-4 uppercase tracking-widest font-bold">Live Preview</p>
                             </div>
                         </div>
                     )}
@@ -162,18 +146,18 @@
                     {activeTab === 'json' && (
                         <div className="space-y-6">
                             <div className="flex justify-between items-center">
-                                <h3 className="text-2xl font-bold tracking-tight">JSON Prettifier</h3>
+                                <h3 className="text-2xl font-bold tracking-tight text-white">JSON Prettifier</h3>
                                 {jsonError && <span className="text-red-500 text-[10px] font-bold bg-red-500/10 px-3 py-1 rounded-full animate-pulse border border-red-500/20">{jsonError}</span>}
                             </div>
                             <textarea 
                                 value={jsonInput} 
                                 onChange={(e) => setJsonInput(e.target.value)} 
                                 placeholder="Paste your raw JSON code here..." 
-                                className={`w-full h-80 bg-black/40 border p-6 rounded-[1.5rem] md:rounded-[2rem] font-mono text-sm focus:border-brand outline-none transition-all ${jsonError ? 'border-red-500/50' : 'border-white/10'}`} 
+                                className={`w-full h-80 bg-black/40 border p-6 rounded-[1.5rem] md:rounded-[2rem] font-mono text-sm focus:border-brand outline-none transition-all text-white ${jsonError ? 'border-red-500/50' : 'border-white/10'}`} 
                             />
                             <div className="flex flex-col md:flex-row gap-4">
                                 <button onClick={handleJsonFormat} className="flex-[2] py-4 bg-brand text-black font-extrabold rounded-2xl hover:brightness-110 active:scale-95 transition">FORMAT CODE</button>
-                                <button onClick={() => { if(!jsonInput){return;} navigator.clipboard.writeText(jsonInput); alert("Copied to clipboard!") }} className="flex-1 py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white/10 active:scale-95 transition">COPY</button>
+                                <button onClick={() => { if(!jsonInput){return;} navigator.clipboard.writeText(jsonInput); }} className="flex-1 py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white/10 active:scale-95 transition text-white">COPY</button>
                             </div>
                         </div>
                     )}
@@ -181,10 +165,10 @@
                     {activeTab === 'glass' && (
                         <div className="grid md:grid-cols-2 gap-12">
                             <div className="space-y-8">
-                                <h3 className="text-2xl font-bold tracking-tight">Glass Designer</h3>
+                                <h3 className="text-2xl font-bold tracking-tight text-white">Glass Designer</h3>
                                 <div className="space-y-6">
                                     <div className="space-y-2">
-                                        <div className="flex justify-between text-xs font-bold uppercase text-gray-500"><span>Blur Amount</span><span>{blur}px</span></div>
+                                        <div className="flex justify-between text-xs font-bold uppercase text-gray-500"><span>Blur</span><span>{blur}px</span></div>
                                         <input type="range" min="0" max="40" value={blur} onChange={(e) => setBlur(e.target.value)} className="w-full h-2 bg-white/5 rounded-lg appearance-none cursor-pointer accent-brand" />
                                     </div>
                                     <div className="space-y-2">
@@ -193,19 +177,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div className="h-64 rounded-[2rem] relative overflow-hidden flex items-center justify-center border border-white/5" style={{background: 'linear-gradient(135deg, #0d2d24 0%, #050505 100%)'}}>
+                            <div className="h-64 rounded-[2rem] relative overflow-hidden flex items-center justify-center border border-white/5 bg-black/20">
                                 <div style={{ backdropFilter: `blur(${blur}px)`, background: `rgba(255,255,255,${opacity})` }} className="w-2/3 h-2/3 rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center">
-                                    <span className="font-bold text-[10px] tracking-widest uppercase text-white/50">Preview Box</span>
+                                    <span className="font-bold text-[10px] tracking-widest uppercase text-white/50">UI Preview</span>
                                 </div>
                             </div>
                         </div>
                     )}
                 </div>
-                <div className="mt-8"><AdSlot type="rectangle" /></div>
             </div>
         );
-
-        // --- MAIN APP ---
 
         const App = () => {
             const [currentPage, setCurrentPage] = useState('home');
@@ -257,7 +238,7 @@
                         <div className="flex items-center gap-3 cursor-pointer" onClick={() => setCurrentPage('home')}>
                             <div className="h-10 w-10 bg-gradient-to-br from-brand to-emerald-800 rounded-xl flex items-center justify-center font-extrabold text-black shadow-lg neon-glow">ZK</div>
                             <div className="hidden sm:block">
-                                <h1 className="text-xl font-extrabold tracking-tighter leading-none uppercase">ZYLLOKIT</h1>
+                                <h1 className="text-xl font-extrabold tracking-tighter leading-none uppercase text-white">ZYLLOKIT</h1>
                                 <p className="text-[10px] text-gray-500 tracking-[3px] uppercase">By SWITS Institute</p>
                             </div>
                         </div>
@@ -284,9 +265,9 @@
                         {currentPage === 'privacy' && <PrivacyPage />}
 
                         <div className="mt-24 px-6 flex flex-col items-center gap-6">
-                            <h2 className="text-xl md:text-2xl font-extrabold tracking-tighter text-center uppercase">Managed by <span className="text-brand">SWITS Institute</span></h2>
+                            <h2 className="text-xl md:text-2xl font-extrabold tracking-tighter text-center uppercase text-white">Managed by <span className="text-brand">SWITS Institute</span></h2>
                             <p className="text-gray-500 text-xs text-center max-w-xl leading-relaxed">
-                                A product of our Lean Operations — delivering international standard technical tools for developers worldwide. Securely processed on your local device.
+                                Professional grade technical tools for developers. Securely processed on your local device.
                             </p>
                         </div>
                     </main>
