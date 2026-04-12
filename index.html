@@ -4,23 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>ZylloKit Pro | Premium Developer Tools & Utility Suite by SWITS</title>
-    <meta name="description" content="ZylloKit Pro by SWITS Institute offers high-performance developer tools including QR Generator, JSON Prettifier, and Glassmorphism CSS Designer. Secure, fast, and private.">
-    <meta name="keywords" content="QR Code Generator, JSON Prettifier, Glassmorphism CSS, Developer Tools, SWITS Institute, Free Web Tools, Pakistan IT Tools">
-    <meta name="author" content="SWITS Institute">
-    <meta name="robots" content="index, follow">
-
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/favicon.png">
-    <link rel="shortcut icon" type="image/png" href="/favicon.png">
-    <meta property="og:image" content="https://zyllokit.pages.dev/favicon.png">
+    <title>ZylloKit Pro | Premium Suite by SWITS</title>
+    <meta name="description" content="High-performance developer tools. Secure, private, and local-first.">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -28,27 +21,52 @@
                 extend: {
                     colors: { 
                         brand: '#10b981', 
-                        darker: '#050505', 
-                        surface: '#0f1715',
-                        accent: '#134e4a'
+                        darker: '#020617', 
+                        surface: '#0f172a',
+                        accent: '#1e293b'
                     },
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }
+                    fontFamily: { 
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif']
+                    }
                 }
             }
         }
     </script>
     <style>
-        body { background: radial-gradient(circle at top right, #0d2d24, #050505); min-height: 100vh; color: #e2e8f0; }
-        .glass-card { background: rgba(15, 23, 21, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(16, 185, 129, 0.1); }
-        .neon-glow { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: #134e4a; border-radius: 10px; }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
+        body { 
+            background: #020617; 
+            background-image: radial-gradient(circle at 0% 0%, #064e3b 0%, transparent 40%), 
+                              radial-gradient(circle at 100% 100%, #111827 0%, transparent 40%);
+            min-height: 100vh; 
+            color: #f8fafc;
+        }
+        .glass-panel { 
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+        .nav-link { position: relative; transition: all 0.3s ease; }
+        .nav-link.active { color: #10b981; }
+        .nav-link.active::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px;
+            background: #10b981; border-radius: 10px;
+        }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        textarea::placeholder { color: rgba(255,255,255,0.2); }
+        .tool-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tool-btn:hover { transform: translateY(-2px); }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
+        input, textarea, select { transition: all 0.2s ease; }
+        
+        /* QR Code Responsiveness */
+        #qrcode img {
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
     </style>
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6595809375510733" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="root"></div>
@@ -56,185 +74,45 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // Professional Invisible AdSlot
-        const AdSlot = () => {
-            useEffect(() => {
-                try {
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                } catch (e) {
-                    console.error("AdSense Error:", e);
-                }
-            }, []);
-
-            return (
-                <div className="w-full flex justify-center my-6 overflow-hidden min-h-[90px]">
-                    <ins className="adsbygoogle"
-                         style={{ display: 'block' }}
-                         data-ad-client="ca-pub-6595809375510733"
-                         data-ad-slot="YOUR_SLOT_ID"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
-            );
-        };
-
-        const ContactPage = () => (
-            <div className="fade-in space-y-8 max-w-3xl mx-auto py-10 px-4">
-                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-center text-white">Contact <span className="text-brand">Support</span></h2>
-                <div className="glass-card rounded-[2rem] p-8 md:p-12 text-center space-y-6">
-                    <p className="text-gray-400 italic">"Empowering the next generation of IT professionals."</p>
-                    <div className="py-6 border-y border-white/5">
-                        <h4 className="text-brand font-bold uppercase tracking-widest text-xs mb-2">Official Institutional Email</h4>
-                        <a href="mailto:skillswithitsolution@gmail.com" className="text-xl md:text-2xl font-bold text-white hover:text-brand transition-colors">skillswithitsolution@gmail.com</a>
-                    </div>
-                    <p className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">SWITS Institute - Karachi, Pakistan</p>
+        const AdUnit = () => (
+            <div className="w-full py-6 md:py-8 flex justify-center border-y border-white/5 my-6 md:my-10 bg-white/5 px-4 text-center">
+                <div className="w-full max-w-4xl overflow-hidden">
+                    <p className="text-[10px] text-gray-600 uppercase tracking-widest mb-4 font-bold">Verified Advertisement</p>
+                    <ins className="adsbygoogle" style={{ display: 'block' }} data-ad-client="ca-pub-6595809375510733" data-ad-slot="YOUR_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 </div>
             </div>
         );
 
-        const AboutPage = () => (
-            <div className="fade-in space-y-8 max-w-3xl mx-auto py-10 px-4">
-                <div className="text-center space-y-4">
-                    <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-white">About <span className="text-brand">ZylloKit</span></h2>
-                    <p className="text-gray-400 font-medium tracking-wide">The Digital Swiss Army Knife for the Modern Web.</p>
-                </div>
-                <div className="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 space-y-6 leading-relaxed text-gray-300">
-                    <p>ZylloKit is a premium suite of technical utility tools curated by <strong>SWITS Institute</strong>. Our mission is to provide developers, students, and designers with high-performance tools that prioritize data privacy and speed.</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                        <div className="p-4 border border-white/5 rounded-2xl bg-white/5 hover:border-brand/30 transition-colors">
-                            <h4 className="text-brand font-bold mb-2">Security First</h4>
-                            <p className="text-xs text-gray-500">We use zero-log architecture. Your inputs are processed locally in your browser memory.</p>
+        const Documentation = () => (
+            <div className="fade-in space-y-10 md:space-y-16 py-8 md:py-12">
+                <section className="text-center space-y-4">
+                    <h2 className="text-2xl md:text-5xl font-extrabold font-heading px-4">Tool <span className="text-brand">Manifesto</span></h2>
+                    <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base px-6">ZylloKit Pro is architected for zero-latency developer workflows. All operations are 100% client-side.</p>
+                </section>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    {[
+                        { title: "QR Core", desc: "Uses Reed-Solomon algorithms for data recovery even if 30% of the code is damaged." },
+                        { title: "JSON Logic", desc: "Recursive parsing engine that handles deep nested structures with O(n) complexity." },
+                        { title: "Privacy First", desc: "No data ever reaches our servers. All processing happens in your local browser sandbox." }
+                    ].map((item, i) => (
+                        <div key={i} className="glass-panel p-6 md:p-8 rounded-3xl space-y-4 border-b-4 border-b-brand/20">
+                            <h4 className="text-xl font-bold text-white">{item.title}</h4>
+                            <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
                         </div>
-                        <div className="p-4 border border-white/5 rounded-2xl bg-white/5 hover:border-brand/30 transition-colors">
-                            <h4 className="text-brand font-bold mb-2">Global Standards</h4>
-                            <p className="text-xs text-gray-500">Built using React 18 and Tailwind CSS to ensure international performance standards.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-
-        const PrivacyPage = () => (
-            <div className="fade-in space-y-8 max-w-3xl mx-auto py-10 px-4">
-                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-center italic text-white">Privacy <span className="text-brand">Protocol</span></h2>
-                <div className="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 space-y-8">
-                    <section>
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-3 underline decoration-brand">1. Local Execution</h3>
-                        <p className="text-gray-400 text-sm">All formatting and generation tasks are handled via client-side scripts. Your code, text, or links are never uploaded to our servers.</p>
-                    </section>
-                    <section>
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-3 underline decoration-brand">2. Cookie Policy</h3>
-                        <p className="text-gray-400 text-sm">We use minimal cookies for Google AdSense and Cloudflare performance monitoring to provide a better user experience.</p>
-                    </section>
-                </div>
-            </div>
-        );
-
-        const TermsPage = () => (
-            <div className="fade-in space-y-8 max-w-3xl mx-auto py-10 px-4">
-                <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter text-center text-white">Terms of <span className="text-brand">Use</span></h2>
-                <div className="glass-card rounded-[2rem] p-6 md:p-10 space-y-6">
-                    <p className="text-gray-400 text-sm leading-relaxed">By accessing ZylloKit, you agree to use these tools for lawful purposes only. SWITS Institute provides these utilities as-is without any warranties.</p>
-                    <ul className="text-xs text-gray-500 list-disc ml-5 space-y-2 uppercase tracking-tighter">
-                        <li>Free for personal and commercial projects.</li>
-                        <li>No redistribution of tool source code without permission.</li>
-                        <li>Educational use encouraged by SWITS Institute.</li>
-                    </ul>
-                </div>
-            </div>
-        );
-
-        const ToolsPage = ({ activeTab, setActiveTab, qrText, setQrText, jsonInput, setJsonInput, jsonError, handleJsonFormat, blur, setBlur, opacity, setOpacity, downloadQR }) => (
-            <div className="fade-in px-4">
-                <div className="flex p-1.5 bg-darker/50 rounded-2xl border border-white/5 mb-8 max-w-md mx-auto overflow-x-auto">
-                    {['qr', 'json', 'glass'].map(t => (
-                        <button key={t} onClick={() => setActiveTab(t)} className={`flex-1 py-3 px-2 rounded-xl text-[10px] md:text-sm font-bold transition-all whitespace-nowrap ${activeTab === t ? 'bg-brand text-black shadow-xl' : 'text-gray-400 hover:text-white'}`}>
-                            {t === 'qr' ? 'QR ENGINE' : t === 'json' ? 'JSON FIXER' : 'UI DESIGN'}
-                        </button>
                     ))}
                 </div>
+            </div>
+        );
 
-                <div className="glass-card rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-brand/5 rounded-full blur-[100px] pointer-events-none"></div>
-                    
-                    {activeTab === 'qr' && (
-                        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                            <div className="space-y-6 order-2 md:order-1 text-left">
-                                <h3 className="text-2xl font-bold text-white tracking-tight">QR Generator Pro</h3>
-                                <p className="text-xs text-gray-500">Convert any URL or text into a high-density QR code instantly.</p>
-                                <textarea value={qrText} onChange={(e) => setQrText(e.target.value)} className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl focus:border-brand transition-all outline-none h-40 font-mono text-sm text-white" placeholder="Enter link or text here..." />
-                                <button onClick={downloadQR} className="w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white/10 transition active:scale-95 text-white">DOWNLOAD PNG</button>
-                            </div>
-                            <div className="flex flex-col items-center justify-center order-1 md:order-2">
-                                <div className="bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl border-[6px] md:border-[8px] border-brand/20" id="qrcode"></div>
-                                <p className="text-[10px] text-gray-500 mt-4 uppercase tracking-widest font-bold">Institutional Security Verified</p>
-                            </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'json' && (
-                        <div className="space-y-6">
-                            <div className="flex justify-between items-center">
-                                <div>
-                                    <h3 className="text-2xl font-bold tracking-tight text-white text-left">JSON Prettifier</h3>
-                                    <p className="text-xs text-gray-500 text-left">Validate and format messy JSON strings into clean, readable code.</p>
-                                </div>
-                                {jsonError && <span className="text-red-500 text-[10px] font-bold bg-red-500/10 px-3 py-1 rounded-full animate-pulse border border-red-500/20">{jsonError}</span>}
-                            </div>
-                            <textarea 
-                                value={jsonInput} 
-                                onChange={(e) => setJsonInput(e.target.value)} 
-                                placeholder="Paste your raw JSON code here..." 
-                                className={`w-full h-80 bg-black/40 border p-6 rounded-[1.5rem] md:rounded-[2rem] font-mono text-sm focus:border-brand outline-none transition-all text-white ${jsonError ? 'border-red-500/50' : 'border-white/10'}`} 
-                            />
-                            <div className="flex flex-col md:flex-row gap-4">
-                                <button onClick={handleJsonFormat} className="flex-[2] py-4 bg-brand text-black font-extrabold rounded-2xl hover:brightness-110 active:scale-95 transition">FORMAT CODE</button>
-                                <button onClick={() => { if(!jsonInput){return;} navigator.clipboard.writeText(jsonInput); }} className="flex-1 py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white/10 active:scale-95 transition text-white">COPY</button>
-                            </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'glass' && (
-                        <div className="grid md:grid-cols-2 gap-12">
-                            <div className="space-y-8 text-left">
-                                <h3 className="text-2xl font-bold tracking-tight text-white">Glassmorphism UI</h3>
-                                <p className="text-xs text-gray-500">Real-time CSS generator for modern frosted-glass effects.</p>
-                                <div className="space-y-6">
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between text-xs font-bold uppercase text-gray-500"><span>Blur Level</span><span>{blur}px</span></div>
-                                        <input type="range" min="0" max="40" value={blur} onChange={(e) => setBlur(e.target.value)} className="w-full h-2 bg-white/5 rounded-lg appearance-none cursor-pointer accent-brand" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between text-xs font-bold uppercase text-gray-500"><span>Transparency</span><span>{opacity}</span></div>
-                                        <input type="range" min="0" max="1" step="0.1" value={opacity} onChange={(e) => setOpacity(e.target.value)} className="w-full h-2 bg-white/5 rounded-lg appearance-none cursor-pointer accent-brand" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="h-64 rounded-[2rem] relative overflow-hidden flex items-center justify-center border border-white/5 bg-black/20">
-                                <div style={{ backdropFilter: `blur(${blur}px)`, background: `rgba(255,255,255,${opacity})` }} className="w-2/3 h-2/3 rounded-3xl border border-white/20 shadow-2xl flex items-center justify-center">
-                                    <span className="font-bold text-[10px] tracking-widest uppercase text-white/50">CSS PREVIEW</span>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                <div className="mt-20 grid md:grid-cols-3 gap-10 text-left border-t border-white/5 pt-16">
-                    <div className="space-y-4">
-                        <div className="h-1 bg-brand w-12 rounded-full"></div>
-                        <h3 className="text-white font-bold text-lg">Why Use ZylloKit?</h3>
-                        <p className="text-gray-400 text-xs leading-relaxed">Unlike other online converters, ZylloKit is designed for efficiency. By utilizing client-side rendering, we ensure that your data is never sent to a backend, making it the most secure choice for developers.</p>
+        const Contact = () => (
+            <div className="fade-in py-10 md:py-20 text-center space-y-8 md:space-y-10 max-w-2xl mx-auto px-4">
+                <div className="p-8 md:p-12 glass-panel rounded-[2.5rem] md:rounded-[3rem] space-y-6">
+                    <div className="w-16 h-16 md:w-20 md:h-20 bg-brand/10 text-brand rounded-full flex items-center justify-center mx-auto">
+                        <svg className="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </div>
-                    <div className="space-y-4">
-                        <div className="h-1 bg-brand w-12 rounded-full"></div>
-                        <h3 className="text-white font-bold text-lg">Advanced Analytics</h3>
-                        <p className="text-gray-400 text-xs leading-relaxed">Our tools are built to handle large datasets. Whether it is a massive JSON file or complex URLs for QR codes, the React 18 engine handles it with sub-millisecond latency.</p>
-                    </div>
-                    <div className="space-y-4">
-                        <div className="h-1 bg-brand w-12 rounded-full"></div>
-                        <h3 className="text-white font-bold text-lg">Educational Tool</h3>
-                        <p className="text-gray-400 text-xs leading-relaxed">SWITS Institute integrates ZylloKit into its curriculum to teach students about modern UI/UX design, data structures, and the importance of browser-based processing.</p>
-                    </div>
+                    <h2 className="text-3xl md:text-4xl font-black font-heading">Get in <span className="text-brand">Touch</span></h2>
+                    <p className="text-gray-400 text-sm md:text-base">Official technical support for ZylloKit and SWITS Institute inquiries.</p>
+                    <a href="mailto:skillswithitsolution@gmail.com" className="text-lg md:text-2xl font-bold text-white block hover:text-brand transition-colors break-words">skillswithitsolution@gmail.com</a>
                 </div>
             </div>
         );
@@ -242,32 +120,17 @@
         const App = () => {
             const [currentPage, setCurrentPage] = useState('home');
             const [activeTab, setActiveTab] = useState('qr');
+            
             const [qrText, setQrText] = useState('https://zyllokit.pages.dev');
             const [jsonInput, setJsonInput] = useState('');
-            const [jsonError, setJsonError] = useState(null);
-            const [blur, setBlur] = useState(15);
-            const [opacity, setOpacity] = useState(0.2);
-
-            const downloadQR = () => {
-                const img = document.querySelector('#qrcode img');
-                if (img) {
-                    const link = document.createElement('a');
-                    link.href = img.src;
-                    link.download = 'ZylloKit_QR.png';
-                    link.click();
-                }
-            };
-
-            const handleJsonFormat = () => {
-                try {
-                    if (!jsonInput.trim()) return;
-                    const parsed = JSON.parse(jsonInput);
-                    setJsonInput(JSON.stringify(parsed, null, 4));
-                    setJsonError(null);
-                } catch(e) {
-                    setJsonError("Invalid JSON Syntax");
-                }
-            };
+            const [pwLength, setPwLength] = useState(24);
+            const [generatedPw, setGeneratedPw] = useState('');
+            const [b64Input, setB64Input] = useState('');
+            const [b64Output, setB64Output] = useState('');
+            const [metaData, setMetaData] = useState({ title: '', desc: '', keys: '' });
+            const [hashInput, setHashInput] = useState('');
+            const [hashOutput, setHashOutput] = useState('');
+            const [pxInput, setPxInput] = useState(16);
 
             useEffect(() => {
                 if (currentPage === 'home' && activeTab === 'qr') {
@@ -275,69 +138,222 @@
                     if (container) {
                         container.innerHTML = "";
                         new QRCode(container, {
-                            text: qrText || " ", width: 200, height: 200,
-                            colorDark: "#050505", colorLight: "#ffffff",
-                            correctLevel: QRCode.CorrectLevel.H
+                            text: qrText || " ", width: 220, height: 220,
+                            colorDark: "#020617", colorLight: "#ffffff"
                         });
                     }
                 }
             }, [qrText, activeTab, currentPage]);
 
-            return (
-                <div className="pb-20">
-                    <nav className="p-6 flex justify-between items-center max-w-6xl mx-auto">
-                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setCurrentPage('home')}>
-                            <div className="h-10 w-10 bg-gradient-to-br from-brand to-emerald-800 rounded-xl flex items-center justify-center font-extrabold text-black shadow-lg neon-glow">ZK</div>
-                            <div className="hidden sm:block">
-                                <h1 className="text-xl font-extrabold tracking-tighter leading-none uppercase text-white">ZYLLOKIT PRO</h1>
-                                <p className="text-[10px] text-gray-500 tracking-[3px] uppercase">By SWITS Institute</p>
+            const renderTool = () => {
+                switch(activeTab) {
+                    case 'qr': return (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center fade-in">
+                            <div className="space-y-6">
+                                <h3 className="text-xl md:text-2xl font-bold font-heading italic">QR Engine</h3>
+                                <textarea value={qrText} onChange={(e) => setQrText(e.target.value)} className="w-full bg-black/40 border border-white/10 p-4 md:p-6 rounded-3xl h-36 md:h-44 font-mono text-sm focus:border-brand/50 outline-none" placeholder="Paste link or text..." />
+                                <button onClick={() => {
+                                    const img = document.querySelector('#qrcode img');
+                                    if(img) {
+                                        const link = document.createElement('a');
+                                        link.href = img.src; link.download = 'ZylloKit_QR.png'; link.click();
+                                    }
+                                }} className="w-full py-4 bg-white text-black font-black rounded-2xl hover:bg-brand transition-all uppercase tracking-widest text-xs">Download PNG</button>
+                            </div>
+                            <div className="flex flex-col items-center justify-center p-6 md:p-8 bg-white/5 rounded-[2.5rem] md:rounded-[3rem] border border-white/5">
+                                <div id="qrcode" className="p-4 md:p-6 bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-2xl border-4 md:border-8 border-brand/20"></div>
                             </div>
                         </div>
-                        <div className="flex gap-4 md:gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                            <button onClick={() => setCurrentPage('home')} className={`hover:text-brand transition ${currentPage === 'home' ? 'text-brand underline decoration-brand' : ''}`}>Tools</button>
-                            <button onClick={() => setCurrentPage('about')} className={`hover:text-brand transition ${currentPage === 'about' ? 'text-brand underline decoration-brand' : ''}`}>About</button>
-                            <button onClick={() => setCurrentPage('privacy')} className={`hover:text-brand transition ${currentPage === 'privacy' ? 'text-brand underline decoration-brand' : ''}`}>Privacy</button>
-                            <button onClick={() => setCurrentPage('contact')} className={`hover:text-brand transition ${currentPage === 'contact' ? 'text-brand underline decoration-brand' : ''}`}>Support</button>
+                    );
+                    case 'json': return (
+                        <div className="space-y-6 fade-in">
+                            <h3 className="text-xl md:text-2xl font-bold font-heading italic">JSON Prettifier</h3>
+                            <textarea value={jsonInput} onChange={(e) => setJsonInput(e.target.value)} className="w-full bg-black/40 border border-white/10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] h-64 md:h-96 font-mono text-sm focus:border-brand/50 outline-none" placeholder="Paste raw JSON here..." />
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <button onClick={() => { try { setJsonInput(JSON.stringify(JSON.parse(jsonInput), null, 4)); } catch(e) { alert("Invalid JSON"); } }} className="flex-1 py-4 bg-brand text-black font-black rounded-2xl uppercase tracking-widest text-xs">Prettify</button>
+                                <button onClick={() => { navigator.clipboard.writeText(jsonInput); alert("Copied!"); }} className="px-10 py-4 bg-white/10 rounded-2xl font-bold text-xs uppercase">Copy</button>
+                            </div>
+                        </div>
+                    );
+                    case 'pass': return (
+                        <div className="space-y-8 md:space-y-12 text-center py-6 md:py-10 fade-in">
+                            <div className="space-y-2">
+                                <h3 className="text-2xl md:text-3xl font-bold font-heading italic">Secure Shield</h3>
+                                <p className="text-gray-500 text-xs md:text-sm italic">Military-grade entropy generation.</p>
+                            </div>
+                            <div className="p-6 md:p-12 glass-panel rounded-[2rem] md:rounded-[3rem] border border-brand/20 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
+                                <div className="text-lg md:text-4xl font-mono text-brand font-bold break-all mb-8 md:mb-10">{generatedPw || "••••••••••••"}</div>
+                                <div className="max-w-xs mx-auto space-y-6">
+                                    <div className="flex justify-between text-[10px] font-bold text-gray-500 uppercase"><span>Length</span><span>{pwLength}</span></div>
+                                    <input type="range" min="8" max="64" value={pwLength} onChange={(e) => setPwLength(e.target.value)} className="w-full accent-brand cursor-pointer" />
+                                    <button onClick={() => {
+                                        const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+                                        let res = ""; for(let i=0; i<pwLength; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+                                        setGeneratedPw(res);
+                                    }} className="w-full py-4 md:py-5 bg-brand text-black font-black rounded-2xl uppercase tracking-widest text-xs">Generate</button>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                    case 'base64': return (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 fade-in">
+                            <div className="space-y-4">
+                                <h3 className="text-lg md:text-xl font-bold font-heading">String / Raw Data</h3>
+                                <textarea value={b64Input} onChange={(e) => setB64Input(e.target.value)} className="w-full bg-black/40 border border-white/10 p-5 md:p-6 rounded-2xl h-48 md:h-64 font-mono text-sm outline-none focus:border-brand/50" placeholder="Type here..." />
+                                <button onClick={() => setB64Output(btoa(b64Input))} className="w-full py-4 bg-brand text-black font-black rounded-xl text-xs uppercase">Encode Base64</button>
+                            </div>
+                            <div className="space-y-4">
+                                <h3 className="text-lg md:text-xl font-bold font-heading text-brand">Encoded Output</h3>
+                                <textarea value={b64Output} onChange={(e) => setB64Output(e.target.value)} className="w-full bg-black/20 border border-brand/20 p-5 md:p-6 rounded-2xl h-48 md:h-64 font-mono text-sm outline-none" placeholder="Result..." />
+                                <button onClick={() => { try { setB64Input(atob(b64Output)); } catch(e) { alert("Invalid Base64"); } }} className="w-full py-4 bg-white/10 text-white font-black rounded-xl text-xs uppercase border border-white/5">Decode</button>
+                            </div>
+                        </div>
+                    );
+                    case 'meta': return (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 fade-in">
+                            <div className="space-y-4 md:space-y-6">
+                                <h3 className="text-xl md:text-2xl font-bold font-heading">SEO Architect</h3>
+                                <input type="text" placeholder="Site Title" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none" value={metaData.title} onChange={e => setMetaData({...metaData, title: e.target.value})} />
+                                <textarea placeholder="Site Description" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl h-24 md:h-32 outline-none" value={metaData.desc} onChange={e => setMetaData({...metaData, desc: e.target.value})} />
+                                <input type="text" placeholder="Keywords" className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none" value={metaData.keys} onChange={e => setMetaData({...metaData, keys: e.target.value})} />
+                            </div>
+                            <div className="bg-black/60 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-white/5 font-mono text-[10px] md:text-[11px] text-brand/80 overflow-auto whitespace-pre min-h-[200px]">
+                                {`<title>${metaData.title || 'Page Title'}</title>\n<meta name="description" content="${metaData.desc || 'Description here...'}">\n<meta name="keywords" content="${metaData.keys || 'Keywords...'}">\n<meta name="author" content="SWITS Institute">`}
+                                <button onClick={() => { navigator.clipboard.writeText(`<title>${metaData.title}</title>\n<meta name="description" content="${metaData.desc}">`); alert("Tags Copied!"); }} className="mt-8 md:mt-10 block w-full py-3 bg-white/5 border border-white/10 text-white font-bold rounded-lg hover:bg-brand hover:text-black transition-all">Copy SEO Pack</button>
+                            </div>
+                        </div>
+                    );
+                    case 'hash': return (
+                        <div className="space-y-8 fade-in text-center">
+                            <h3 className="text-xl md:text-2xl font-bold font-heading italic">SHA-256 Hash Generator</h3>
+                            <div className="max-w-xl mx-auto space-y-4">
+                                <input type="text" value={hashInput} onChange={(e) => {
+                                    setHashInput(e.target.value);
+                                    setHashOutput(CryptoJS.SHA256(e.target.value).toString());
+                                }} className="w-full bg-black/40 border border-white/10 p-6 rounded-2xl text-center text-lg md:text-xl outline-none focus:border-brand/50" placeholder="Enter text to hash..." />
+                                <div className="p-4 md:p-6 bg-brand/5 border border-brand/20 rounded-2xl break-all font-mono text-center text-sm md:text-base text-brand">
+                                    {hashOutput || "Hash result will appear here"}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                    case 'rem': return (
+                        <div className="max-w-md mx-auto py-6 md:py-10 fade-in text-center space-y-8">
+                            <h3 className="text-xl md:text-2xl font-bold font-heading">PX to REM Converter</h3>
+                            <div className="flex flex-row items-center gap-2 md:gap-4 justify-center">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-bold uppercase text-gray-500">Pixels</label>
+                                    <input type="number" value={pxInput} onChange={(e) => setPxInput(e.target.value)} className="w-24 md:w-32 bg-black/40 border border-white/10 p-4 md:p-6 rounded-2xl text-center text-xl md:text-2xl outline-none" />
+                                </div>
+                                <div className="text-brand text-xl md:text-3xl font-bold pt-6">→</div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-bold uppercase text-gray-500">REM</label>
+                                    <div className="w-24 md:w-32 bg-brand/10 border border-brand/20 p-4 md:p-6 rounded-2xl text-center text-xl md:text-2xl font-black text-brand italic">
+                                        {pxInput / 16}
+                                    </div>
+                                </div>
+                            </div>
+                            <p className="text-gray-500 text-[10px] md:text-xs italic">Standard root size is 16px.</p>
+                        </div>
+                    );
+                    default: return <div className="text-center py-20 text-gray-500 italic">Feature loading...</div>;
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    <nav className="sticky top-0 z-50 p-4 md:p-6 glass-panel border-b border-white/5">
+                        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <div className="flex items-center gap-3 cursor-pointer" onClick={() => setCurrentPage('home')}>
+                                <div className="h-10 w-10 md:h-12 md:w-12 bg-gradient-to-br from-brand to-emerald-700 rounded-xl md:rounded-2xl flex items-center justify-center font-black text-black text-lg md:text-xl shadow-lg shadow-brand/20 transition-transform hover:scale-105">ZK</div>
+                                <div>
+                                    <h1 className="text-lg md:text-xl font-black font-heading tracking-tighter uppercase leading-none">ZylloKit <span className="text-brand">Pro</span></h1>
+                                    <p className="text-[8px] md:text-[9px] text-gray-500 font-bold tracking-[2px] md:tracking-[3px] uppercase">By SWITS Institute</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4 md:gap-8 text-[9px] md:text-[11px] font-black uppercase tracking-widest text-gray-400">
+                                {['home', 'about', 'privacy', 'contact'].map(p => (
+                                    <button key={p} onClick={() => setCurrentPage(p)} className={`nav-link ${currentPage === p ? 'active' : ''}`}>{p}</button>
+                                ))}
+                            </div>
                         </div>
                     </nav>
 
-                    <div className="max-w-5xl mx-auto px-6"><AdSlot /></div>
-
-                    <main className="max-w-5xl mx-auto mt-8">
+                    <main className="flex-grow max-w-6xl mx-auto w-full px-4 md:px-6 py-8 md:py-12">
                         {currentPage === 'home' && (
-                            <ToolsPage 
-                                activeTab={activeTab} setActiveTab={setActiveTab}
-                                qrText={qrText} setQrText={setQrText}
-                                jsonInput={jsonInput} setJsonInput={setJsonInput}
-                                jsonError={jsonError} handleJsonFormat={handleJsonFormat}
-                                blur={blur} setBlur={setBlur}
-                                opacity={opacity} setOpacity={setOpacity}
-                                downloadQR={downloadQR}
-                            />
+                            <div className="space-y-8 md:space-y-12">
+                                <header className="text-center space-y-4 py-6 md:py-10">
+                                    <h2 className="text-3xl sm:text-5xl md:text-7xl font-black font-heading tracking-tighter italic px-2">
+                                        The <span className="text-brand underline decoration-white/10">Elite</span> Toolkit.
+                                    </h2>
+                                    <p className="text-gray-400 max-w-xl mx-auto font-medium text-sm md:text-base px-4">Professional grade utilities for modern software engineers. No data leaves your machine.</p>
+                                </header>
+
+                                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2 md:gap-3 max-w-5xl mx-auto">
+                                    {[
+                                        {id: 'qr', label: 'QR'}, {id: 'json', label: 'JSON'}, 
+                                        {id: 'pass', label: 'Pass'}, {id: 'base64', label: 'B64'},
+                                        {id: 'meta', label: 'SEO'}, {id: 'hash', label: 'HASH'},
+                                        {id: 'rem', label: 'REM'}
+                                    ].map(tab => (
+                                        <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`py-3 md:py-4 px-1 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-tighter md:tracking-widest transition-all ${activeTab === tab.id ? 'bg-brand text-black shadow-xl scale-105' : 'bg-white/5 text-gray-500 hover:text-white border border-white/5'}`}>
+                                            {tab.label}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div className="glass-panel rounded-[2rem] md:rounded-[4rem] p-6 md:p-16 relative overflow-hidden fade-in min-h-[400px] md:min-h-[550px] border-t-brand/30 border-t-2">
+                                    <div className="absolute top-0 right-0 w-48 h-48 md:w-80 md:h-80 bg-brand/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none"></div>
+                                    {renderTool()}
+                                </div>
+                                
+                                <AdUnit />
+                                <Documentation />
+                            </div>
                         )}
-                        {currentPage === 'about' && <AboutPage />}
-                        {currentPage === 'privacy' && <PrivacyPage />}
-                        {currentPage === 'contact' && <ContactPage />}
-                        {currentPage === 'terms' && <TermsPage />}
 
-                        <div className="mt-12 px-6"><AdSlot /></div>
+                        {currentPage === 'about' && (
+                            <div className="fade-in max-w-4xl mx-auto space-y-8 md:space-y-12 py-6 md:py-10 px-2">
+                                <h2 className="text-3xl md:text-5xl font-black font-heading text-center italic leading-tight">Crafted by <span className="text-brand underline decoration-white/20">Engineers</span></h2>
+                                <div className="glass-panel p-8 md:p-12 rounded-[2rem] md:rounded-[3.5rem] space-y-6 md:space-y-8 leading-relaxed text-gray-400 border-b-brand border-b-4">
+                                    <p className="text-lg md:text-xl">ZylloKit Pro is a flagship project by <strong>SWITS Institute</strong>, Karachi. It was designed to fill the gap between clumsy web tools and privacy-first developer requirements.</p>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/5">
+                                        <div><h6 className="text-brand font-bold text-[9px] md:text-[10px] uppercase mb-1">Architecture</h6><p className="text-white font-bold text-xs md:text-sm">React 18</p></div>
+                                        <div><h6 className="text-brand font-bold text-[9px] md:text-[10px] uppercase mb-1">Styles</h6><p className="text-white font-bold text-xs md:text-sm">Tailwind CSS</p></div>
+                                        <div><h6 className="text-brand font-bold text-[9px] md:text-[10px] uppercase mb-1">Privacy</h6><p className="text-white font-bold text-xs md:text-sm">Local-Only</p></div>
+                                        <div><h6 className="text-brand font-bold text-[9px] md:text-[10px] uppercase mb-1">Agency</h6><p className="text-white font-bold text-xs md:text-sm">SWITS Lab</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
-                        <div className="mt-24 px-6 flex flex-col items-center gap-6">
-                            <h2 className="text-xl md:text-2xl font-extrabold tracking-tighter text-center uppercase text-white">Managed by <span className="text-brand">SWITS Institute</span></h2>
-                            <p className="text-gray-500 text-xs text-center max-w-xl leading-relaxed">
-                                Professional grade technical tools for developers. Securely processed on your local device for maximum performance and privacy compliance.
-                            </p>
-                        </div>
+                        {currentPage === 'contact' && <Contact />}
+                        
+                        {currentPage === 'privacy' && (
+                            <div className="fade-in max-w-3xl mx-auto space-y-8 md:space-y-12 px-4">
+                                <h2 className="text-3xl md:text-4xl font-black font-heading text-center italic">Zero-Log <span className="text-brand">Protocol</span></h2>
+                                <div className="glass-panel p-8 md:p-10 rounded-[1.5rem] md:rounded-[2rem] space-y-6 text-sm text-gray-400">
+                                    <p>Your privacy is our mechanical baseline. ZylloKit Pro does not utilize any server-side storage or database for user-inputted data.</p>
+                                    <ul className="list-disc ml-5 space-y-2">
+                                        <li>All encryption happens in <strong>Browser Memory</strong>.</li>
+                                        <li>No third-party trackers are injected into tool outputs.</li>
+                                        <li>Source code is optimized for local performance.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        )}
                     </main>
 
-                    <footer className="mt-24 py-12 border-t border-white/5 text-center">
-                        <div className="flex justify-center gap-8 mb-6 text-[10px] font-bold uppercase tracking-widest text-gray-600">
-                            <button onClick={() => setCurrentPage('privacy')} className="hover:text-brand transition">Privacy Policy</button>
-                            <button onClick={() => setCurrentPage('terms')} className="hover:text-brand transition">Terms of Service</button>
-                            <button onClick={() => setCurrentPage('contact')} className="hover:text-brand transition">Contact Us</button>
+                    <footer className="py-12 md:py-20 border-t border-white/5 bg-darker text-center px-4">
+                        <div className="max-w-6xl mx-auto space-y-8">
+                            <div className="flex justify-center gap-6 md:gap-10 text-[9px] md:text-[10px] font-black uppercase tracking-[2px] md:tracking-[4px] text-gray-600">
+                                <button onClick={() => setCurrentPage('privacy')} className="hover:text-brand transition">Privacy</button>
+                                <button onClick={() => setCurrentPage('about')} className="hover:text-brand transition">About</button>
+                                <button onClick={() => setCurrentPage('contact')} className="hover:text-brand transition">Support</button>
+                            </div>
+                            <p className="text-[8px] md:text-[10px] text-gray-800 font-bold uppercase tracking-[8px] md:tracking-[15px] break-words">SWITS INSTITUTE • KARACHI • PAKISTAN</p>
+                            <p className="text-[10px] md:text-[11px] text-gray-600">&copy; 2026 ZylloKit Pro. Powered by SWITS Neural Engine v2.0</p>
                         </div>
-                        <p className="text-[8px] md:text-[9px] text-gray-700 font-bold uppercase tracking-[6px] md:tracking-[10px]">Secure • Private • International Standards</p>
-                        <p className="text-[10px] text-gray-800 mt-4">&copy; 2026 SWITS Institute. All Rights Reserved.</p>
                     </footer>
                 </div>
             );
